@@ -14,6 +14,14 @@
   
 </head>
 <body>
+  <!-- <div class="swiper-container">
+    <div class="swiper-wrapper">
+      </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-scrollbar"></div>
+  </div> -->
 <div class="container-fluid">
 <div class="container">
   <div class="row">
@@ -23,26 +31,15 @@
       </div>
     </div>
     <div class="col-md-9">
-          <div class="swiper-container">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                <div class="swiper-slide">Slide 1</div>
-                <div class="swiper-slide">Slide 2</div>
-                <div class="swiper-slide">Slide 3</div>
-                ...
-            </div>
-            <!-- If we need pagination -->
-            <div class="swiper-pagination"></div>
-        
-            <!-- If we need navigation buttons -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        
-            <!-- If we need scrollbar -->
-            <div class="swiper-scrollbar"></div>
-        </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+          </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-scrollbar"></div>
       </div>
+    </div>
     <div class="col-md-3">
       <div id="filter">
         <form id="Time">
@@ -86,8 +83,8 @@
   </div>
   </div>
 </div>
-  <!-- The div that holds our map -->
-  <div id="filter-radio"></div>
+  <!-- Our CSS -->
+  <link rel="stylesheet href="style.css">
 
   <!-- D3 -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
