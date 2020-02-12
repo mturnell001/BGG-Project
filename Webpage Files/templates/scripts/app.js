@@ -54,10 +54,21 @@ function buildQuery(values){
 function buildPage(data) {
     d3.select('#main').text(data[0].gameName)
 
-    const mySwiper = new Swiper('.swiper-container')
+    const mySwiper = new Swiper('.swiper-container', {
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto',
+        pagination: {
+            el: '.swiper-pagination',
+          },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+      });
     mySwiper.removeAllSlides();
     for (let i = 0; i < 10; i++) {
-        mySwiper.appendSlide(`<div class="swiper-slide">${data[i].gameName}</div>`);
+        mySwiper.appendSlide(`<div class="swiper-slide" style="background-image:url(${data[i].thumbnail})">${data[i].gameName}</div>`);
     }
     mySwiper.update();
 }
