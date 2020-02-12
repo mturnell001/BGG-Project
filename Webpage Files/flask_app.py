@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template
-from pymongo import MongoClient
+from pymongo import MongoClient, ASCENDING
 
 def db_query(query = '='):
     """
@@ -35,7 +35,10 @@ def db_query(query = '='):
     mongo_url = 'mongodb+srv://mongoAdmin:BGG1198$@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
     client = MongoClient(mongo_url)
     db = client.boardgames
-    games = [game for game in db.games.find(filter=filter_dict, projection={'_id': False})]
+    games = [game for game in db.games.\
+        find(filter=filter_dict, projection={'_id': False}).\
+            sort([("id", ASCENDING)]).\
+                limit(10)]
 
     response = jsonify(games)
     response.headers.add('Access-Control-Allow-Origin', '*')

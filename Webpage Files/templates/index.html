@@ -23,7 +23,6 @@
     <div class="swiper-scrollbar"></div>
   </div> -->
 <div class="container-fluid">
-<div class="container">
   <div class="row">
     <div class="col-md-3">
       <div class="charts">
@@ -42,15 +41,18 @@
     </div>
     <div class="col-md-3">
       <div id="filter">
+        <img src="images/electrode.jpg" alt="PLACEHOLDER (LOGO?)" width="60%"/>
+        <br>
         <form id="Time">
-          <h4>Game Length</h4>
-          <label class="block"><input type='radio' value="30" name="time">About a half hour</label>
-          <label class="block"><input type='radio' value="60" name="time">About an hour</label>
-          <label class="block"><input type='radio' value="120" name="time">Close to two hours</label>
-          <label class="block"><input type='radio' value="240" name="time">Four hours</label>
-          <label class="block"><input type='radio' value="300" name="time">Might take all day</label>
+          <h6>Game Length</h6>
+          <div><input type='radio' value="30" name="time">About half an hour</input></div>
+          <div><input type='radio' value="60" name="time">About an hour</input></div>
+          <div><input type='radio' value="120" name="time">Close to two hours</input></div>
+          <div><input type='radio' value="240" name="time">Four hours</input></div>
+          <div><input type='radio' value="300" name="time">Might take all day</input></div>
         </form>
-        <h4>Number of Players</h4>
+        <br>
+        <h6>Number of Players</h6>
         <select id="numPlayers">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -60,8 +62,8 @@
           <option value="6">6</option>
           <option value="7">6+</option>
         </select>
-        <br>
-        <h4>Minimum Recommended Age</h4>
+        <br><br>
+        <h6>Minimum Recommended Age</h6>
         <select id="minAge">
           <option value="0">Unlisted</option>
           <option value="4">4</option>
@@ -73,14 +75,41 @@
           <option value="16">16</option>
           <option value="18">18+</option>
         </select>
-        <h4>Minimum Rating</h4>
+        <br><br>
+        <h6>Minimum Rating</h6>
         <form>
           <input type="text" id="rating">
         </form>
+        <br>
         <button id="filter-button" type="button">Filter</button>
       </div>
     </div>
-  </div>
+    <div class="col-md-6">
+          <div class="swiper-container">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                <div class="swiper-slide">Slide 1</div>
+                <div class="swiper-slide">Slide 2</div>
+                <div class="swiper-slide">Slide 3</div>
+                ...
+            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+        
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
+        </div>
+      </div>
+    <div class="col-md-3">
+      <div class="charts">
+
+      </div>
+    </div>
   </div>
 </div>
   <!-- Our CSS -->
