@@ -23,7 +23,6 @@
       </div>
     </div>
     <div class="col-md-9">
-      <div class="row">
           <div class="swiper-container">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
@@ -44,13 +43,47 @@
             <div class="swiper-scrollbar"></div>
         </div>
       </div>
-      </div>
-    </div>
     <div class="col-md-3">
-      <div class="query">
-
+      <div id="filter">
+        <form id="Time">
+          <h4>Game Length</h4>
+          <label class="block"><input type='radio' value="30" name="time">About a half hour</label>
+          <label class="block"><input type='radio' value="60" name="time">About an hour</label>
+          <label class="block"><input type='radio' value="120" name="time">Close to two hours</label>
+          <label class="block"><input type='radio' value="240" name="time">Four hours</label>
+          <label class="block"><input type='radio' value="300" name="time">Might take all day</label>
+        </form>
+        <h4>Number of Players</h4>
+        <select id="numPlayers">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">6+</option>
+        </select>
+        <br>
+        <h4>Minimum Recommended Age</h4>
+        <select id="minAge">
+          <option value="0">Unlisted</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="12">12</option>
+          <option value="14">14</option>
+          <option value="16">16</option>
+          <option value="18">18+</option>
+        </select>
+        <h4>Minimum Rating</h4>
+        <form>
+          <input type="text" id="rating">
+        </form>
+        <button id="filter-button" type="button">Filter</button>
       </div>
     </div>
+  </div>
   </div>
 </div>
   <!-- The div that holds our map -->

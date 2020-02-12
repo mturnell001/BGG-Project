@@ -53,4 +53,11 @@ function buildQuery(values){
 
 function buildPage(data) {
     d3.select('#main').text(data[0].gameName)
+
+    const mySwiper = new Swiper('.swiper-container')
+    mySwiper.removeAllSlides();
+    for (let i = 0; i < 10; i++) {
+        mySwiper.appendSlide(`<div class="swiper-slide">${data[i].gameName}</div>`);
+    }
+    mySwiper.update();
 }
