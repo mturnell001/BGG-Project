@@ -30,6 +30,8 @@ def db_query(query = '='):
     client = MongoClient(mongo_url)
     db = client.boardgames
     games = [game for game in db.games.find(filter=filter_dict, projection={'_id': False})]
+    if (games.length == 0):
+        return {results:'no results'}
     return jsonify(games)
 
 app = Flask(__name__, static_url_path='')
