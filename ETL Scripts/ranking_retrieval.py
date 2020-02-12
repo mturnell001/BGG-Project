@@ -11,7 +11,7 @@ remote_db_url = f'mongodb+srv://mongoAdmin:${DB_PASS}@cluster0-qg8p8.mongodb.net
 remote_client = MongoClient(remote_db_url)
 
 # change once atlas comes back up
-bgg_db = local_client.boardgames
+bgg_db = remote_client.boardgames
 
 id_nums = []
 for game in bgg_db.games.find({'id': {'$exists': True}}):
