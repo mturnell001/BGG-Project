@@ -1,4 +1,3 @@
-import ast
 from flask import Flask, jsonify, render_template
 from pymongo import MongoClient
 
@@ -30,7 +29,10 @@ def db_query(query = '='):
     client = MongoClient(mongo_url)
     db = client.boardgames
     games = [game for game in db.games.find(filter=filter_dict, projection={'_id': False})]
-    return jsonify(games)
+
+    response = jsonify(games)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 app = Flask(__name__, static_url_path='')
 
