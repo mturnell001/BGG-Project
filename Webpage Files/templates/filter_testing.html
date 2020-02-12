@@ -4,23 +4,20 @@
   <meta charset="UTF-8">
   <title>Test</title>
 
-
-  <!-- Our CSS -->
-  <!-- <link rel="stylesheet" type="text/css" href="static/css/style.css"> -->
   <!-- bootstrapcdn -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div id="filter radio">
+    <div id="filter">
         <form id="Time">
           <h4>Game Length</h4>
-          <label class="block"><input type='radio' id="30" name="mode">About a half hour</label>
-          <label class="block"><input type='radio' id="60" name="mode">About an hour</label>
-          <label class="block"><input type='radio' id="120" name="mode">Close to two hours</label>
-          <label class="block"><input type='radio' id="240" name="mode">Four hours</label>
-          <label class="block"><input type='radio' id="9000" name="mode">Might take all day</label>
+          <label class="block"><input type='radio' value="30" name="time">About a half hour</label>
+          <label class="block"><input type='radio' value="60" name="time">About an hour</label>
+          <label class="block"><input type='radio' value="120" name="time">Close to two hours</label>
+          <label class="block"><input type='radio' value="240" name="time">Four hours</label>
+          <label class="block"><input type='radio' value="300" name="time">Might take all day</label>
         </form>
         <h4>Number of Players</h4>
         <select id="numPlayers">
@@ -35,6 +32,7 @@
         <br>
         <h4>Minimum Recommended Age</h4>
         <select id="minAge">
+          <option value="0">Unlisted</option>
           <option value="4">4</option>
           <option value="6">6</option>
           <option value="8">8</option>
@@ -46,8 +44,11 @@
         </select>
         <h4>Minimum Rating</h4>
         <form>
-          <input type="text" name="rating">
+          <input type="text" id="rating">
         </form>
+        <button id="filter-button" type="button">Filter</button>
+      </div>
+      <div id="main">
       </div>
 
   <!-- D3 -->
