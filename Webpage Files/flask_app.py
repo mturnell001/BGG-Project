@@ -9,22 +9,29 @@ def db_query(query = '='):
     """
     filter_dict = {}
     filters = query.split('&')
+    proper_query = False
     for item in filters:
         kv_pair = item.split('=')
         if (kv_pair[0] == 'playerAge'):
             filter_dict.update({'minAge': {'$lte':int(kv_pair[1])}})
+            proper_query = True
 
         if (kv_pair[0] == 'rating'):
             filter_dict.update({'user_rating': {'$gte':float(kv_pair[1])}})
+            proper_query = True
         
         if (kv_pair[0] == 'numPlayers'):
             filter_dict.update({'minPlayers': {'$lte':int(kv_pair[1])}})
             filter_dict.update({'maxPlayers': {'$gte':int(kv_pair[1])}})
+            proper_query = True
         
         if (kv_pair[0] == 'gameTime'):
             filter_dict.update({'minTime': {'$lte':int(kv_pair[1])}})
             filter_dict.update({'maxTime': {'$gte':int(kv_pair[1])}})
-        
+            proper_query = True
+
+    if (proper_query == False):
+        return {'results':'no results'}
     mongo_url = 'mongodb+srv://mongoAdmin:BGG1198$@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
     client = MongoClient(mongo_url)
     db = client.boardgames
