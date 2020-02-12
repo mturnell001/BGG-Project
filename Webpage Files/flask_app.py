@@ -1,5 +1,5 @@
 import ast
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from pymongo import MongoClient
 
 def db_query(query = '='):
@@ -32,7 +32,15 @@ def db_query(query = '='):
     games = [game for game in db.games.find(filter=filter_dict, projection={'_id': False})]
     return jsonify(games)
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
+
+@app.route('/')
+def home():
+    """
+    This renders the home page/base route
+    """
+    return render_template('index.html')
+
 
 @app.route('/data')
 def data(query_param = ''):
