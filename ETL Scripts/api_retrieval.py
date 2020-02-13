@@ -2,11 +2,12 @@ import untangle
 import html
 import time
 from pymongo import MongoClient, InsertOne, DeleteMany
+from config import DB_PASS
 
 def mongoSetup():
-    '''Initializes a localhost mongoDB, and returns the MongoClient object'''
-    db_url = 'mongodb://localhost:27017'
-    return(MongoClient(db_url))
+    '''Connects to cloud atlas mongoDB, and returns the MongoClient object'''
+    remote_db_url = f'mongodb+srv://mongoAdmin:Is9WzljUe0N8OjPi@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
+    return(MongoClient(remote_db_url))
 
 
 def game_retrieval(idMin, idMax):
@@ -86,6 +87,15 @@ def game_retrieval(idMin, idMax):
                             
             #parse out the user rating
             user_rating = item.statistics.ratings.average['value']
+
+            #parse out the bgg ranking
+            for rank in item.statistics.ratings.ranks.rank:
+                if rank['friendlyname'] == "Board Game Rank":
+                    if rank['value'] == "Not Ranked":
+                        ranking = 999999
+                    else:
+                        ranking = int(rank['value'])
+
             game_dict = {
                 'id' : item['id'],
                 'thumbnail' : thumbnail,
@@ -102,7 +112,8 @@ def game_retrieval(idMin, idMax):
                 'suggested_player_ct' : suggest_playerct,
                 'suggested_player_age' : suggest_playerage,
                 'language_dependency' : lang_dep,
-                'user_rating' : int(user_rating)
+                'user_rating' : float(user_rating),
+                'ranking' : ranking
             }
             result_list_of_dicts.append(game_dict)
     
@@ -122,7 +133,7 @@ def main():
         game_list = game_retrieval(id_ranges[x],id_ranges[x+1])
         # print(game_list)
         # inserts = [InsertOne(game) for game in game_list]
-        bgg_db.games.insert_many(game_list)
+        bgg_db.games_with_ranking.insert_many(game_list)
         time.sleep(5)
 
 main()

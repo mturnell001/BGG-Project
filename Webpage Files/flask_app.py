@@ -36,9 +36,9 @@ def db_query(query = '='):
     mongo_url = f'mongodb+srv://mongoAdmin:{DB_PASS}@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
     client = MongoClient(mongo_url)
     db = client.boardgames
-    games = [game for game in db.games.\
+    games = [game for game in db.games_with_ranking.\
         find(filter=filter_dict, projection={'_id': False}).\
-            sort([("id", ASCENDING)]).\
+            sort([("ranking", ASCENDING)]).\
                 limit(10)]
 
     response = jsonify(games)

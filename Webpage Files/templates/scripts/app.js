@@ -52,7 +52,7 @@ function buildQuery(values){
 }
 
 function buildPage(data) {
-    d3.select('#main').text(data[0].gameName)
+    // d3.select('#main').text(data[0].gameName)
 
     const mySwiper = new Swiper('.swiper-container', {
         grabCursor: true,

@@ -7,7 +7,7 @@ import math
 local_db_url = 'mongodb://localhost:27017'
 local_client = MongoClient(local_db_url)
 
-remote_db_url = f'mongodb+srv://mongoAdmin:${DB_PASS}@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
+remote_db_url = f'mongodb+srv://mongoAdmin:Is9WzljUe0N8OjPi@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
 remote_client = MongoClient(remote_db_url)
 
 # change once atlas comes back up
@@ -28,7 +28,7 @@ print(id_ranges)
 
 
 results_list = []
-for i in range(0, len(id_ranges) - 1):
+for i in range(16, len(id_ranges) - 1):
     url_ids = []
     for j in range(id_ranges[i],id_ranges[i+1]):
         url_ids.append(id_nums[j])
@@ -41,14 +41,13 @@ for i in range(0, len(id_ranges) - 1):
 
     for item in obj.items.item:
         for rank in item.statistics.ratings.ranks.rank:
-            print(rank)
             if rank['friendlyname'] == "Board Game Rank":
                 if rank['value'] == "Not Ranked":
                     results_list.append({'id' : item['id'],
                                         'ranking' : 999999})
                 else:
                     results_list.append({'id' : item['id'],
-                                        'ranking' : rank['value']})
+                                        'ranking' : int(rank['value'])})
     
     print(results_list)
     for pair in results_list:
@@ -56,7 +55,10 @@ for i in range(0, len(id_ranges) - 1):
             {'id' : pair['id']},
             {'$set': {'ranking' : pair['ranking']}}
         )
-    time.sleep(4)
+
+    
+    print('SLEEP', i)
+    time.sleep(1)
 
 
 # for x in range(0,len(id_ranges)-1):
