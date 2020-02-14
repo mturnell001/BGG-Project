@@ -72,10 +72,24 @@ function updateCharts(game) {
 
     d3.select('.charts').html('')
     d3.select('.agechart').html('')
+    d3.select('.blurb').html('')
     if (game.language_dependency !== 'NO DATA'){ langChart(game) };
     if (game.suggested_player_ct !== 'NO DATA'){ playCtChart(game) };
     if (game.suggested_player_age !== 'NO DATA'){ ageChart(game) };
+    blurb(game);
     
+}
+
+function blurb(game) {
+    const blurb = d3.select('.blurb')
+    .append('ul');
+    
+    blurb.selectAll('li')
+    .data(game)
+    .enter()
+    .append('li')
+    .text(d=>d);
+    console.log(game);
 }
 
 function langChart(game) {
