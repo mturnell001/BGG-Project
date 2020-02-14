@@ -95,14 +95,31 @@ function updateCharts(game) {
             .attr('id', 'age_poll')
             .html("<br><h4>NO DATA</h4>")};
 
-    // blurb(game);
+    blurb(game);
     
-    // blurb.selectAll('li')
-    // .data(game)
-    // .enter()
-    // .append('li')
-    // .text(d=>d);
-    // console.log(game);
+}
+
+function blurb(game) {
+
+    blurbKeys = [{name:'Game Name', key:'gameName'},
+                 {name:'Year Published', key: 'yearPublished'},
+                 {name:'Info', key: 'description'},
+                 {name: 'Max Players', key: 'maxPlayers'},
+                 {name:'Min. Game Time', key: 'minTime'},
+                 {name:'GameBoardGeek Rank', key: 'ranking'}]
+
+    const blurbItems = d3.select('.blurb')
+    .append('ul').selectAll('li').data(blurbKeys);
+
+
+    blurbItems.enter()
+    .append('li')
+    .text(d => {
+        
+        if (d.key == 'description') {return `${d.name}: ${game[d.key].slice(0,256) + '...'}`}
+        else if (d.key == 'minTime') { return `${d.key}: ${game[d.key]} minutes`}
+        else {return `${d.name}: ${game[d.key]}`}
+    });    
 }
 
 //build the language dependency chart
