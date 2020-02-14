@@ -66,7 +66,9 @@ function buildPage(data) {
 
     updateCharts(data[0]);
     mySwiper.on('slideChange', function () {
-        updateCharts(data[mySwiper.activeIndex])});
+        updateCharts(data[mySwiper.activeIndex]);
+        blurb(data[mySwiper.activeIndex]);
+    });
 }
 
 //update all the charts
@@ -75,7 +77,7 @@ function updateCharts(game) {
     d3.select('.langchart').html('<h2>Language Dependency</h2>');
     d3.select('.agechart').html('<h2>Recommended Age</h2>');
     d3.select('.ctchart').html('<h2>Suggested Player Count</h2>');
-    d3.select('.blurb').html('')
+    
 
     if (game.language_dependency !== 'NO DATA') {  langChart(game) }
     else {d3.select('.langchart')
@@ -94,11 +96,11 @@ function updateCharts(game) {
             .append('div')
             .attr('id', 'age_poll')
             .html("<br><h4>NO DATA</h4>")};
-
-    blurb(game);
 }
 
 function blurb(game) {
+
+    d3.select('.blurb').html('')
 
     blurbKeys = [{name:'Game Name', key:'gameName'},
                  {name:'Year Published', key:'yearPublished'},
