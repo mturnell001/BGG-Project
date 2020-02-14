@@ -78,7 +78,7 @@ function updateCharts(game) {
     d3.select('.langchart').html('<h2>Language Dependency</h2>');
     d3.select('.agechart').html('<h2>Recommended Age</h2>');
     d3.select('.ctchart').html('<h2>Suggested Player Count</h2>');
-    d3.select('.blurb').html('')
+    
 
     if (game.language_dependency !== 'NO DATA') {  langChart(game) }
     else {d3.select('.langchart')
