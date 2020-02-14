@@ -12,6 +12,7 @@ function runQuery(){
     d3.json(`http://localhost:5000/api/${query}`).then(data => buildPage(data))
 };
 
+//collect the selected filter values from the page
 function fieldCollection(){
 let timeValue = "0";
     try{
@@ -20,26 +21,25 @@ let timeValue = "0";
     catch(err) {};
     const minAge = d3.select('#minAge').property("value");
     const numPlayers = d3.select('#numPlayers').property("value");
-    let rating = false;
-    if (!rating) {rating = "0"};
     const values = {'Time' : timeValue,
                     'Age' : minAge,
-                    'Players' : numPlayers,
-                    'Rating' : rating};
+                    'Players' : numPlayers};
     return(values)
 };
 
+//construct the query string from the field values
 function buildQuery(values){
     let query = ''
     if (!(values.Time === "0")){
-        query = `gameTime=${values.Time}&playerAge=${values.Age}&numPlayers=${values.Players}&rating=${values.Rating}`;
+        query = `gameTime=${values.Time}&playerAge=${values.Age}&numPlayers=${values.Players}`;
     }
     else {
-        query = `playerAge=${values.Age}&numPlayers=${values.Players}&rating=${values.Rating}`;
+        query = `playerAge=${values.Age}&numPlayers=${values.Players}`;
     }
     return(query)
 }
 
+//build the page structure and the swiper slides
 function buildPage(data) {
     
     const mySwiper = new Swiper('.swiper-container', {
@@ -68,14 +68,30 @@ function buildPage(data) {
     mySwiper.on('slideChange', function () {updateCharts(data[mySwiper.activeIndex])});
 }
 
+//update all the charts
 function updateCharts(game) {
 
-    d3.select('.charts').html('')
-    d3.select('.agechart').html('')
-    d3.select('.blurb').html('')
-    if (game.language_dependency !== 'NO DATA'){ langChart(game) };
-    if (game.suggested_player_ct !== 'NO DATA'){ playCtChart(game) };
-    if (game.suggested_player_age !== 'NO DATA'){ ageChart(game) };
+    d3.select('.langchart').html('<h2>Language Dependency</h2>');
+    d3.select('.agechart').html('<h2>Recommended Age</h2>');
+    d3.select('.ctchart').html('<h2>Suggested Player Count</h2>');
+    if (game.language_dependency !== 'NO DATA') {  langChart(game) }
+    else {d3.select('.langchart')
+            .append('div')
+            .attr('id', 'language_poll')
+            .html("<h4>NO DATA</h4>")};
+
+    if (game.suggested_player_ct !== 'NO DATA') { playCtChart(game) }
+    else {d3.select('.ctchart')
+            .append('div')
+            .attr('id', 'count_poll')
+            .html("<h4>NO DATA</h4>")};
+
+    if (game.suggested_player_age !== 'NO DATA') { ageChart(game) }
+    else {d3.select('.agechart')
+            .append('div')
+            .attr('id', 'age_poll')
+            .html("<br><h4>NO DATA</h4>")};
+
     blurb(game);
     
 }
@@ -92,7 +108,6 @@ function blurb(game) {
     const blurbItems = d3.select('.blurb')
     .append('ul').selectAll('li').data(blurbKeys);
 
-    console.log(game);
 
     blurbItems.enter()
     .append('li')
@@ -101,23 +116,13 @@ function blurb(game) {
         if (d.key == 'description') {return `${d.name}: ${game[d.key].slice(0,256) + '...'}`}
         else if (d.key == 'minTime') { return `${d.key}: ${game[d.key]} minutes`}
         else {return `${d.name}: ${game[d.key]}`}
-    });        
-    // .append('li')
-    // .text(`Year Published : ${game.yearPublished}`)
-    // .append('li')
-    // .text(`Info: ${game[d.key].slice(0,256) + '...'}`)
-    // .append('li')
-    // .text(`Max Players: ${game.maxPlayers}`)
-    // .append('li')
-    // .text(`Min. Game Time: ${game.minTime} minutes`)
-    // .append('li')
-    // .text(`GameBoardGeek Rank: ${game.ranking}`);
-    
+    });    
 }
 
+//build the language dependency chart
 function langChart(game) {
     //append svg area for language chart
-    const svg = d3.select('.charts')
+    const svg = d3.select('.langchart')
     .append('div')
         .attr('id', 'language_poll')
         .append('svg')
@@ -186,9 +191,10 @@ function langChart(game) {
         .call(yAxis);
 }
 
+//build the recommended player count chart
 function playCtChart(game) {
-    //append svg area for language chart
-    const svg = d3.select('.charts')
+    //append svg area for player count chart
+    const svg = d3.select('.ctchart')
     .append('div')
         .attr('id', 'playCt_poll')
         .append('svg')
@@ -204,6 +210,9 @@ function playCtChart(game) {
             if(type === 'Best'){total += votes*2};
             if(type === 'Recommended'){total += votes};
             if(type === 'Not Recommended'){total -= votes};
+        }
+        if (key.includes("+")){
+            key = ">" + key.split("+")[0];
         }
         votes.push({"name" : key, "value" : total})
     };
@@ -261,6 +270,7 @@ function playCtChart(game) {
         .call(yAxis);
 }
 
+//build the recommended age chart
 function ageChart(game) {
     //append svg area for age chart
     const svg = d3.select('.agechart')
@@ -329,3 +339,9 @@ function ageChart(game) {
     svg.append("g")
         .call(yAxis);
 }
+
+//for initial page load, load the top 10 ranked games
+d3.json(`http://localhost:5000/api/INITIAL_LOAD`).then(data => {
+        console.log(data);
+        buildPage(data);
+    });

@@ -13,12 +13,16 @@ def db_query(query = '='):
     proper_query = False
     for item in filters:
         kv_pair = item.split('=')
+<<<<<<< HEAD
+        if (kv_pair[0] == 'INITIAL_LOAD'):
+=======
         if (kv_pair[0] == 'playerAge'):
             filter_dict.update({'minAge': {'$eq':int(kv_pair[1])}})
+>>>>>>> 9cd06fd0583ce82f5ff8a2c720064a55b56ebd6f
             proper_query = True
-
-        if (kv_pair[0] == 'rating'):
-            filter_dict.update({'user_rating': {'$gte':float(kv_pair[1])}})
+            
+        if (kv_pair[0] == 'playerAge'):
+            filter_dict.update({'minAge': {'$eq':int(kv_pair[1])}})
             proper_query = True
         
         if (kv_pair[0] == 'numPlayers'):
