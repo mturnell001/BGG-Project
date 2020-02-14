@@ -13,12 +13,31 @@ html, body {
 }
 
 #filter {
-    font-size : 10px;
+    font-size : 12px;
+    outline: black;
+    border: 2px lightgrey;
+    outline-width: 5px;
+    outline-style: double;
+    text-align: center;
+    position: relative;
+    top: 2%;
+    padding-bottom: 4%;
+}
+
+.chartrow {
+    padding-top: 1%;
+}
+
+.radio {
+    text-align: left;
+    margin-left: 28%;
 }
 
 #filter h6 {
     font-size : 14px;
 }
+
+
 
 .chart h2 {
     font-size : 20px;
@@ -28,5 +47,4 @@ html, body {
 .chart h4 {
     font-size: 18px;
     text-align: center;
-    color: gray;
 }

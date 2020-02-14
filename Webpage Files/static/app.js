@@ -65,7 +65,8 @@ function buildPage(data) {
     mySwiper.update();
 
     updateCharts(data[0]);
-    mySwiper.on('slideChange', function () {updateCharts(data[mySwiper.activeIndex])});
+    mySwiper.on('slideChange', function () {
+        updateCharts(data[mySwiper.activeIndex])});
 }
 
 //update all the charts
@@ -74,6 +75,8 @@ function updateCharts(game) {
     d3.select('.langchart').html('<h2>Language Dependency</h2>');
     d3.select('.agechart').html('<h2>Recommended Age</h2>');
     d3.select('.ctchart').html('<h2>Suggested Player Count</h2>');
+    d3.select('.blurb').html('')
+
     if (game.language_dependency !== 'NO DATA') {  langChart(game) }
     else {d3.select('.langchart')
             .append('div')
@@ -161,7 +164,7 @@ function langChart(game) {
         .call(d3.axisLeft(y).tickFormat(i => votes[i].name).tickSizeOuter(0))
 
     svg.append("g")
-        .attr("fill", "steelblue")
+        .attr("fill", "#3f3a60")
         .selectAll("rect")
         .data(votes)
             .join("rect")
@@ -240,7 +243,7 @@ function playCtChart(game) {
         .call(d3.axisLeft(y).tickFormat(i => votes[i].name).tickSizeOuter(0))
 
     svg.append("g")
-        .attr("fill", "steelblue")
+        .attr("fill", "#3f3a60")
         .selectAll("rect")
         .data(votes)
             .join("rect")
@@ -276,7 +279,7 @@ function ageChart(game) {
         .attr('id', 'age_poll')
         .append('svg')
             .attr('id', 'age_svg')
-            .attr('height', 600);
+            .attr('height', 350);
     //define margins
     const margin = ({top: 30, right: 0, bottom: 10, left: 30});
 
@@ -310,7 +313,7 @@ function ageChart(game) {
         .call(d3.axisLeft(y).tickFormat(i => votes[i].name).tickSizeOuter(0))
 
     svg.append("g")
-        .attr("fill", "steelblue")
+        .attr("fill", "#3f3a60")
         .selectAll("rect")
         .data(votes)
             .join("rect")
