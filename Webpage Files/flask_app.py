@@ -45,7 +45,7 @@ def db_query(query = '='):
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
 
 @app.route('/')
 def home():

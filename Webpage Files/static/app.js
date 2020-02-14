@@ -30,7 +30,7 @@ let timeValue = "0";
     catch(err) {};
     const minAge = d3.select('#minAge').property("value");
     const numPlayers = d3.select('#numPlayers').property("value");
-    let rating = d3.select("#rating").property("value");
+    let rating = false;
     if (!rating) {rating = "0"};
     const values = {'Time' : timeValue,
                     'Age' : minAge,
@@ -52,13 +52,11 @@ function buildQuery(values){
 }
 
 function buildPage(data) {
-    // d3.select('#main').text(data[0].gameName)
     
     const mySwiper = new Swiper('.swiper-container', {
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
-        //autoHeight: true,
         pagination: {
             el: '.swiper-pagination',
           },
@@ -71,20 +69,16 @@ function buildPage(data) {
       const slides = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data(data);
       slides
       .enter()
-      .append('div')
-      .merge(slides)
-      .classed('swiper-slide', true)
-      .html(d => `<img src="${d.thumbnail}" style="height:200px;display: block;margin-left: auto;margin-right: auto;" />${d.gameName}`)
-      //.style('background-image', d => `url(${d.thumbnail})`)
-      //.text(d => d.gameName)
+        .append('div')
+        .merge(slides)
+        .classed('swiper-slide', true)
+        .html(d => `<img src="${d.thumbnail}" style="height:200px;display: block;margin-left: auto;margin-right: auto;" />${d.gameName}`)
       slides.exit().remove();
-    //mySwiper.removeAllSlides();
-    // for (let i = 0; i < 10; i++) {
-    //     mySwiper.appendSlide(`<div class="swiper-slide" style="background-image:url(${data[i].thumbnail})">${data[i].gameName}</div>`);
-    // }
+
     mySwiper.update();
-    // TODO: pass updateCharts which slide swiper is on
+
     updateCharts(data[0]);
+    mySwiper.on('slideChange', function () {updateCharts(data[mySwiper.activeIndex])});
 }
 
 function updateCharts(game) {
@@ -158,7 +152,7 @@ function langChart(game) {
                 .attr("x", v => x(v.value) + 7*(v.value.toString().length))
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(10)(v.value));
+                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);
@@ -233,7 +227,7 @@ function playCtChart(game) {
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
                 .attr("fill", v => (v.value < 0) ? "red" : "black")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(v.value));
+                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);
@@ -244,7 +238,7 @@ function playCtChart(game) {
 
 function ageChart(game) {
     //append svg area for age chart
-    const svg = d3.select('.charts')
+    const svg = d3.select('.agechart')
     .append('div')
         .attr('id', 'age_poll')
         .append('svg')
@@ -303,7 +297,7 @@ function ageChart(game) {
                 .attr("x", v => x(v.value) + 7*(v.value.toString().length))
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(10)(v.value));
+                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);

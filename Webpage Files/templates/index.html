@@ -24,9 +24,7 @@
           <!-- Additional required wrapper -->
           <div class="swiper-wrapper">
             <!-- Slides -->
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide"></div>
           </div>
           <!-- If we need pagination -->
           <div class="swiper-pagination"></div>
@@ -41,10 +39,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div id="filter">
-          <img src="images/electrode.jpg" alt="PLACEHOLDER (LOGO?)" width="60%" />
-          <br>
           <form id="Time">
             <h6>Game Length</h6>
             <div><input type='radio' value="30" name="time">About half an hour</input></div>
@@ -78,30 +74,29 @@
             <option value="18">18+</option>
           </select>
           <br><br>
-          <h6>Minimum Rating</h6>
-          <form>
-            <input type="text" id="rating">
-          </form>
-          <br>
           <button id="filter-button" type="button">Filter</button>
         </div>
       </div>
 
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="charts">
 
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="agechart">
         </div>
       </div>
     </div>
   </div>
   <!-- Our CSS -->
-  <link rel="stylesheet href=" style.css">
+  <link rel="stylesheet" href="static/style.css">
 
   <!-- D3 -->
   <script src="https://d3js.org/d3.v5.min.js"></script>
 
   <!-- Our JavaScript -->
-  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="static/app.js"></script>
 </body>
 
 </html>
