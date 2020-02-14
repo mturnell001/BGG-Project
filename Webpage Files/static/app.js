@@ -65,6 +65,7 @@ function buildPage(data) {
     mySwiper.update();
 
     updateCharts(data[0]);
+    blurb(data[0]);
     mySwiper.on('slideChange', function () {
         updateCharts(data[mySwiper.activeIndex]);
         blurb(data[mySwiper.activeIndex]);
