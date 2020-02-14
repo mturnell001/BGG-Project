@@ -58,6 +58,7 @@ function buildPage(data) {
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto',
+        //autoHeight: true,
         pagination: {
             el: '.swiper-pagination',
           },
@@ -66,10 +67,21 @@ function buildPage(data) {
             prevEl: '.swiper-button-prev',
           },
       });
-    mySwiper.removeAllSlides();
-    for (let i = 0; i < 10; i++) {
-        mySwiper.appendSlide(`<div class="swiper-slide" style="background-image:url(${data[i].thumbnail})">${data[i].gameName}</div>`);
-    }
+      console.log(mySwiper);
+      const slides = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data(data);
+      slides
+      .enter()
+      .append('div')
+      .merge(slides)
+      .classed('swiper-slide', true)
+      .html(d => `<img src="${d.thumbnail}" style="height:200px;display: block;margin-left: auto;margin-right: auto;" />${d.gameName}`)
+      //.style('background-image', d => `url(${d.thumbnail})`)
+      //.text(d => d.gameName)
+      slides.exit().remove();
+    //mySwiper.removeAllSlides();
+    // for (let i = 0; i < 10; i++) {
+    //     mySwiper.appendSlide(`<div class="swiper-slide" style="background-image:url(${data[i].thumbnail})">${data[i].gameName}</div>`);
+    // }
     mySwiper.update();
     // TODO: pass updateCharts which slide swiper is on
     updateCharts(data[0]);

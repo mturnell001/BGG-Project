@@ -1,0 +1,12 @@
+.block {
+    display: block;
+}
+html, body {
+    position: relative;
+  }
+.swiper-container {
+    height: auto;
+}
+.swiper-slide {
+    height:auto;
+}
