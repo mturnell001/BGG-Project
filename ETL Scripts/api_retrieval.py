@@ -6,7 +6,7 @@ from config import DB_PASS
 
 def mongoSetup():
     '''Connects to cloud atlas mongoDB, and returns the MongoClient object'''
-    remote_db_url = f'mongodb+srv://mongoAdmin:Is9WzljUe0N8OjPi@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
+    remote_db_url = f'mongodb+srv://mongoAdmin:{DB_PASS}@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
     return(MongoClient(remote_db_url))
 
 
