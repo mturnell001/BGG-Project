@@ -1,10 +1,3 @@
-// d3.json('http://localhost:5000/api/numPlayers=7').then(data => {
-//     // console.log(data);
-//     for(let i = 0; i < data.length; i++){
-//         console.log(data[i].minAge)
-//     }
-// });
-
 //when filter is clicked, submit a query to flask
 const filterButton = d3.select('body').select('#filter-button');
 filterButton.on("click", function(d) {
@@ -40,7 +33,6 @@ let timeValue = "0";
 };
 
 function buildQuery(values){
-    console.log(values);
     let query = ''
     if (!(values.Time === "0")){
         query = `gameTime=${values.Time}&playerAge=${values.Age}&numPlayers=${values.Players}&rating=${values.Rating}`;
@@ -65,7 +57,6 @@ function buildPage(data) {
             prevEl: '.swiper-button-prev',
           },
       });
-      console.log(mySwiper);
       const slides = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data(data);
       slides
       .enter()
@@ -84,6 +75,7 @@ function buildPage(data) {
 function updateCharts(game) {
 
     d3.select('.charts').html('')
+    d3.select('.agechart').html('')
     if (game.language_dependency !== 'NO DATA'){ langChart(game) };
     if (game.suggested_player_ct !== 'NO DATA'){ playCtChart(game) };
     if (game.suggested_player_age !== 'NO DATA'){ ageChart(game) };
@@ -152,7 +144,7 @@ function langChart(game) {
                 .attr("x", v => x(v.value) + 7*(v.value.toString().length))
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
+                .text(v => (v.value === 0) ? '' : (parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);
@@ -227,7 +219,7 @@ function playCtChart(game) {
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
                 .attr("fill", v => (v.value < 0) ? "red" : "black")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
+                .text(v => (v.value === 0) ? '' : (parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);
@@ -254,7 +246,6 @@ function ageChart(game) {
         votes.push({"name" : key, "value" : value})
     };
     votes.sort();
-    console.log(votes);
 
     //set chart dimensions
     const width = 200;
@@ -297,7 +288,7 @@ function ageChart(game) {
                 .attr("x", v => x(v.value) + 7*(v.value.toString().length))
                 .attr("y", (v, i) => y(i) + y.bandwidth() / 2)
                 .attr("dy", "0.35em")
-                .text(v => (v.value === 0) ? '' : x.tickFormat(20)(parseInt(v.value)));
+                .text(v => (v.value === 0) ? '' : (parseInt(v.value)));
 
     svg.append("g")
         .call(xAxis);
