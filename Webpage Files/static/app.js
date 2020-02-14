@@ -81,15 +81,38 @@ function updateCharts(game) {
 }
 
 function blurb(game) {
-    const blurb = d3.select('.blurb')
-    .append('ul');
-    
-    blurb.selectAll('li')
-    .data(game)
-    .enter()
-    .append('li')
-    .text(d=>d);
+
+    blurbKeys = [{name:'Game Name', key:'gameName'},
+                 {name:'Year Published', key: 'yearPublished'},
+                 {name:'Info', key: 'description'},
+                 {name: 'Max Players', key: 'maxPlayers'},
+                 {name:'Min. Game Time', key: 'minTime'},
+                 {name:'GameBoardGeek Rank', key: 'ranking'}]
+
+    const blurbItems = d3.select('.blurb')
+    .append('ul').selectAll('li').data(blurbKeys);
+
     console.log(game);
+
+    blurbItems.enter()
+    .append('li')
+    .text(d => {
+        
+        if (d.key == 'description') {return `${d.name}: ${game[d.key].slice(0,256) + '...'}`}
+        else if (d.key == 'minTime') { return `${d.key}: ${game[d.key]} minutes`}
+        else {return `${d.name}: ${game[d.key]}`}
+    });        
+    // .append('li')
+    // .text(`Year Published : ${game.yearPublished}`)
+    // .append('li')
+    // .text(`Info: ${game[d.key].slice(0,256) + '...'}`)
+    // .append('li')
+    // .text(`Max Players: ${game.maxPlayers}`)
+    // .append('li')
+    // .text(`Min. Game Time: ${game.minTime} minutes`)
+    // .append('li')
+    // .text(`GameBoardGeek Rank: ${game.ranking}`);
+    
 }
 
 function langChart(game) {
