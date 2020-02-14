@@ -14,7 +14,7 @@ def db_query(query = '='):
     for item in filters:
         kv_pair = item.split('=')
         if (kv_pair[0] == 'playerAge'):
-            filter_dict.update({'minAge': {'$lte':int(kv_pair[1])}})
+            filter_dict.update({'minAge': {'$eq':int(kv_pair[1])}})
             proper_query = True
 
         if (kv_pair[0] == 'rating'):
@@ -53,16 +53,6 @@ def home():
     This renders the home page/base route
     """
     return render_template('index.html')
-
-
-@app.route('/data')
-def data(query_param = ''):
-    """
-    This function calls the db_query function, and returns all data when a
-    user goes to the /data 
-    """
-    games = db_query()    
-    return games
 
 @app.route('/api/<query_param>')
 def api(query_param = ''):

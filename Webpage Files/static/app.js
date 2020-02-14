@@ -9,10 +9,7 @@ function runQuery(){
     const values = fieldCollection();
     const query = buildQuery(values);
     console.log(query);
-    d3.json(`http://localhost:5000/api/${query}`).then(data => {
-        console.log(data);
-        buildPage(data);
-    })
+    d3.json(`http://localhost:5000/api/${query}`).then(data => buildPage(data))
 };
 
 function fieldCollection(){
@@ -48,10 +45,8 @@ function buildPage(data) {
     const mySwiper = new Swiper('.swiper-container', {
         grabCursor: true,
         centeredSlides: true,
+        spaceBetween: 45,
         slidesPerView: 'auto',
-        pagination: {
-            el: '.swiper-pagination',
-          },
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
@@ -63,7 +58,7 @@ function buildPage(data) {
         .append('div')
         .merge(slides)
         .classed('swiper-slide', true)
-        .html(d => `<img src="${d.thumbnail}" style="height:200px;display: block;margin-left: auto;margin-right: auto;" />${d.gameName}`)
+        .html(d => `<img src="${d.thumbnail}" style="height:400px;display: block;margin-left:auto;margin-right:auto"/>`)
       slides.exit().remove();
 
     mySwiper.update();
