@@ -9,10 +9,7 @@ function runQuery(){
     const values = fieldCollection();
     const query = buildQuery(values);
     console.log(query);
-    d3.json(`http://localhost:5000/api/${query}`).then(data => {
-        console.log(data);
-        buildPage(data);
-    })
+    d3.json(`http://localhost:5000/api/${query}`).then(data => buildPage(data))
 };
 
 //collect the selected filter values from the page
@@ -48,22 +45,21 @@ function buildPage(data) {
     const mySwiper = new Swiper('.swiper-container', {
         grabCursor: true,
         centeredSlides: true,
+        spaceBetween: 45,
         slidesPerView: 'auto',
-        pagination: {
-            el: '.swiper-pagination',
-          },
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
           },
       });
+      const placeholder = "static/images/no-box-art.jpg"
       const slides = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data(data);
       slides
       .enter()
         .append('div')
         .merge(slides)
         .classed('swiper-slide', true)
-        .html(d => `<img src="${d.thumbnail}" style="height:200px;display: block;margin-left: auto;margin-right: auto;" />${d.gameName}`)
+        .html(d => `<img src="${d.thumbnail ? d.thumbnail : placeholder}" style="height:400px;display: block;margin-left:auto;margin-right:auto"/>`)
       slides.exit().remove();
 
     mySwiper.update();
@@ -75,6 +71,7 @@ function buildPage(data) {
 //update all the charts
 function updateCharts(game) {
 
+<<<<<<< HEAD
     d3.select('.langchart').html('<h2>Language Dependency</h2>');
     d3.select('.agechart').html('<h2>Recommended Age</h2>');
     d3.select('.ctchart').html('<h2>Suggested Player Count</h2>');
@@ -95,7 +92,28 @@ function updateCharts(game) {
             .append('div')
             .attr('id', 'age_poll')
             .html("<br><h4>NO DATA</h4>")};
+=======
+    d3.select('.charts').html('')
+    d3.select('.agechart').html('')
+    d3.select('.blurb').html('')
+    if (game.language_dependency !== 'NO DATA'){ langChart(game) };
+    if (game.suggested_player_ct !== 'NO DATA'){ playCtChart(game) };
+    if (game.suggested_player_age !== 'NO DATA'){ ageChart(game) };
+    blurb(game);
     
+}
+
+function blurb(game) {
+    const blurb = d3.select('.blurb')
+    .append('ul');
+>>>>>>> 9cd06fd0583ce82f5ff8a2c720064a55b56ebd6f
+    
+    blurb.selectAll('li')
+    .data(game)
+    .enter()
+    .append('li')
+    .text(d=>d);
+    console.log(game);
 }
 
 //build the language dependency chart

@@ -13,7 +13,12 @@ def db_query(query = '='):
     proper_query = False
     for item in filters:
         kv_pair = item.split('=')
+<<<<<<< HEAD
         if (kv_pair[0] == 'INITIAL_LOAD'):
+=======
+        if (kv_pair[0] == 'playerAge'):
+            filter_dict.update({'minAge': {'$eq':int(kv_pair[1])}})
+>>>>>>> 9cd06fd0583ce82f5ff8a2c720064a55b56ebd6f
             proper_query = True
             
         if (kv_pair[0] == 'playerAge'):
@@ -52,16 +57,6 @@ def home():
     This renders the home page/base route
     """
     return render_template('index.html')
-
-
-@app.route('/data')
-def data(query_param = ''):
-    """
-    This function calls the db_query function, and returns all data when a
-    user goes to the /data 
-    """
-    games = db_query()    
-    return games
 
 @app.route('/api/<query_param>')
 def api(query_param = ''):

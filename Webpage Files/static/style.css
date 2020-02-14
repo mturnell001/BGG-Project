@@ -6,6 +6,7 @@ html, body {
   }
 .swiper-container {
     height: auto;
+    width: auto;
 }
 .swiper-slide {
     height:auto;
