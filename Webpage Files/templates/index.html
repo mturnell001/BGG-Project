@@ -18,7 +18,7 @@
 
 <body>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row slideshow">
       <div class="col-md-9">
         <div class="swiper-container">
           <!-- Additional required wrapper -->
@@ -39,16 +39,16 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3">
+    <div class="row chartrow">
+      <div class="col-md-3 filter">
         <div id="filter">
           <form id="Time">
             <h6>Game Length</h6>
-            <div><input type='radio' value="30" name="time">About half an hour</input></div>
-            <div><input type='radio' value="60" name="time">About an hour</input></div>
-            <div><input type='radio' value="120" name="time">Close to two hours</input></div>
-            <div><input type='radio' value="240" name="time">Four hours</input></div>
-            <div><input type='radio' value="300" name="time">Might take all day</input></div>
+            <div class="radio"><input type='radio' value="30" name="time">About half an hour</input></div>
+            <div class="radio"><input type='radio' value="60" name="time">About an hour</input></div>
+            <div class="radio"><input type='radio' value="120" name="time">Close to two hours</input></div>
+            <div class="radio"><input type='radio' value="240" name="time">Four hours</input></div>
+            <div class="radio"><input type='radio' value="300" name="time">Might take all day</input></div>
           </form>
           <br>
           <h6>Number of Players</h6>
@@ -64,7 +64,7 @@
           <br><br>
           <h6>Min. Recommended Age</h6>
           <select id="minAge">
-            <option value="0">Unlisted</option>
+            <option value="0">&lt;NONE&gt;</option>
             <option value="4">4</option>
             <option value="6">6</option>
             <option value="8">8</option>
@@ -79,18 +79,18 @@
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="agechart chart">
+      <div class="col-md-3 chart">
+        <div class="agechart">
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="ctchart chart">
+      <div class="col-md-3 chart">
+        <div class="ctchart">
         </div>
       </div>
 
-      <div class="col-md-3">
-        <div class="langchart chart">
+      <div class="col-md-3 chart">
+        <div class="langchart">
         </div>
       </div>
     </div>
