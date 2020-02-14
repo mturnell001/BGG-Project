@@ -96,7 +96,6 @@ function updateCharts(game) {
             .html("<br><h4>NO DATA</h4>")};
 
     blurb(game);
-    
 }
 
 function blurb(game) {
