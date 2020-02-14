@@ -93,7 +93,7 @@ function updateCharts(game) {
     else {d3.select('.agechart')
             .append('div')
             .attr('id', 'age_poll')
-            .html("<br><h4>NO DATA</h4>")};
+            .html("<h4>NO DATA</h4>")};
 
     blurb(game);
 }
