@@ -65,8 +65,11 @@ function buildPage(data) {
     mySwiper.update();
 
     updateCharts(data[0]);
+    blurb(data[0]);
     mySwiper.on('slideChange', function () {
-        updateCharts(data[mySwiper.activeIndex])});
+        const data = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data();
+        updateCharts(data[mySwiper.realIndex]);
+        blurb(data[mySwiper.realIndex])});
 }
 
 //update all the charts
@@ -95,17 +98,18 @@ function updateCharts(game) {
             .attr('id', 'age_poll')
             .html("<h4>NO DATA</h4>")};
 
-    blurb(game);
 }
 
 function blurb(game) {
 
+    d3.select('.blurb').html('');
+    
     blurbKeys = [{name:'Game Name', key:'gameName'},
                  {name:'Year Published', key:'yearPublished'},
                  {name:'Info', key:'description'},
                  {name:'Max Players', key:'maxPlayers'},
                  {name:'Min. Game Time', key:'minTime'},
-                 {name:'GameBoardGeek Rank', key:'ranking'}]
+                 {name:'BoardGameGeek Rank', key:'ranking'}]
 
     const blurbItems = d3.select('.blurb')
     .append('ul').selectAll('li').data(blurbKeys);
