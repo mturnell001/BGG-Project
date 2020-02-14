@@ -52,13 +52,14 @@ function buildPage(data) {
             prevEl: '.swiper-button-prev',
           },
       });
+      const placeholder = "static/images/no-box-art.jpg"
       const slides = d3.select('.swiper-wrapper').selectAll('.swiper-slide').data(data);
       slides
       .enter()
         .append('div')
         .merge(slides)
         .classed('swiper-slide', true)
-        .html(d => `<img src="${d.thumbnail}" style="height:400px;display: block;margin-left:auto;margin-right:auto"/>`)
+        .html(d => `<img src="${d.thumbnail ? d.thumbnail : placeholder}" style="height:400px;display: block;margin-left:auto;margin-right:auto"/>`)
       slides.exit().remove();
 
     mySwiper.update();
