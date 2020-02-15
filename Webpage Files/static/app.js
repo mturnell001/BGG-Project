@@ -8,7 +8,6 @@ filterButton.on("click", function(d) {
 function runQuery(){
     const values = fieldCollection();
     const query = buildQuery(values);
-    console.log(query);
     d3.json(`/api/${query}`).then(data => buildPage(data))
 };
 
@@ -121,7 +120,6 @@ function blurb(game) {
     ranking = game['ranking'] === 999999 ? 'Unranked' : game['ranking'],
     rating = game['user_rating'];
 
-    console.log(info.length);
     //add a row containing title and published year
     const topRow = d3.select('.blurb').append('div')
         .attr('class', 'row');
@@ -417,6 +415,5 @@ function ageChart(game) {
 
 //for initial page load, load the top 10 ranked games
 d3.json(`/api/INITIAL_LOAD`).then(data => {
-        console.log(data);
         buildPage(data);
     });
