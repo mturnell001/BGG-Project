@@ -9,7 +9,7 @@ function runQuery(){
     const values = fieldCollection();
     const query = buildQuery(values);
     console.log(query);
-    d3.json(`http://localhost:5000/api/${query}`).then(data => buildPage(data))
+    d3.json(`/api/${query}`).then(data => buildPage(data))
 };
 
 //collect the selected filter values from the page
@@ -59,7 +59,7 @@ function buildPage(data) {
         .append('div')
         .merge(slides)
         .classed('swiper-slide', true)
-        .html(d => `<img src="${d.thumbnail ? d.thumbnail : placeholder}" style="height:400px;display: block;margin-left:auto;margin-right:auto"/>`)
+        .html(d => `<img src="${d.thumbnail ? d.thumbnail : placeholder}" class="swiper-slide-pic"/>`)
       slides.exit().remove();
 
     mySwiper.update();
@@ -104,23 +104,86 @@ function blurb(game) {
 
     d3.select('.blurb').html('');
     
-    blurbKeys = [{name:'Game Name', key:'gameName'},
-                 {name:'Year Published', key:'yearPublished'},
-                 {name:'Info', key:'description'},
-                 {name:'Max Players', key:'maxPlayers'},
-                 {name:'Min. Game Time', key:'minTime'},
-                 {name:'BoardGameGeek Rank', key:'ranking'}]
+    const name = game['gameName'],
+    year = game['yearPublished'],
+    //this is a lot of shenanigans to not cut off in the middle of a word
+    info = game['description'].slice(0,350).split(' ')
+        .slice(0,game['description'].slice(0,350).split(' ').length-1)
+        .join(' ').split('.').join('.')+'...',
+    minct = game['minPlayers'],
+    maxct = game['maxPlayers'],
+    mintime = game['minTime'],
+    maxtime = game['maxTime'],
+    ranking = game['ranking'],
+    rating = game['user_rating'];
 
-    const blurbItems = d3.select('.blurb')
-    .append('ul').selectAll('li').data(blurbKeys);
+    //add a row containing title and published year
+    const topRow = d3.select('.blurb').append('div')
+        .attr('class', 'row');
+            
+    topRow.append('div')
+            .attr('class', 'col-md-6 top')
+                .html(`<h2>Title:</h2> ${name}`);
+    topRow.append('div')
+            .attr('class', 'col-md-6 top')
+                .html(`<h2>Published in:</h2> ${year}`);
 
-    blurbItems.enter()
-    .append('li')
-    .text(d => {
-        if (d.key == 'description') {return `${d.name}: ${game[d.key].slice(0,256) + '...'}`}
-        else if (d.key == 'minTime') { return `${d.key}: ${game[d.key]} minutes`}
-        else {return `${d.name}: ${game[d.key]}`}
-    });    
+    //add the description
+    d3.select('.blurb').append('div')
+        .attr('class', 'row')
+            .append('div')
+                .attr('class', 'col-md-12 info')
+                    .text(`${info}`);
+
+    //add a row containing advertised player count and game time
+    const thirdRow = d3.select('.blurb').append('div')
+        .attr('class', 'row');
+
+    thirdRow.append('div')
+            .attr('class', 'col-md-6 third')
+                .html(`<h2>Player Count:</h2> ${minct} - ${maxct}`);
+
+    thirdRow.append('div')
+            .attr('class', 'col-md-6 third')
+                .html(`<h2>Est. Time:</h2> ${mintime} - ${maxtime} min.`);
+
+    //add final row containing ranking and rating info
+    const lastRow = d3.select('.blurb').append('div')
+        .attr('class', 'row');
+
+    lastRow.append('div')
+            .attr('class', 'col-md-6 last')
+                .append('svg')
+                    .attr('width', '100%')
+                    .attr('height', '100%')
+                    .attr('viewBox', '0 0 100 100')
+                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#3f3a60"></circle>
+                                <text x="50%" y="35%" font-family="sans-serif" font-size="14px" text-anchor="middle" fill="black">BGG
+                                Ranking</text>
+                                <text x="50%" y="57%" font-family="sans-serif" font-size="20px" text-anchor="middle" fill='white'>${ranking}</text>`);
+    
+                
+    lastRow.append('div')
+            .attr('class', 'col-md-6 last')
+                .append('svg')
+                    .attr('width', '100%')
+                    .attr('height', '100%')
+                    .attr('viewBox', '0 0 100 100')
+                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#3f3a60"></circle>
+                                <text x="50%" y="35%" font-family="sans-serif" font-size="14px" text-anchor="middle" fill="black">User Rating</text>`)
+                            .append('text')
+                                .attr('x', '50%')
+                                .attr('y', '57%')
+                                .attr('font-size', '20px')
+                                .attr('text-anchor', 'middle')
+                                .attr('fill', function () {
+                                    if (rating > 8) { return 'green' }
+                                    else if (rating > 6){ return 'yellow'}
+                                    else { return 'red' };
+                                })
+                                .text(rating);
+                                
+
 }
 
 //build the language dependency chart
@@ -345,7 +408,7 @@ function ageChart(game) {
 }
 
 //for initial page load, load the top 10 ranked games
-d3.json(`http://localhost:5000/api/INITIAL_LOAD`).then(data => {
+d3.json(`/api/INITIAL_LOAD`).then(data => {
         console.log(data);
         buildPage(data);
     });
