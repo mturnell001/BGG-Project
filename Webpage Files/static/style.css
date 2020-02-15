@@ -69,15 +69,21 @@ html, body {
 .top h2 {
     font-size: 18px;
     font-weight: bold;
-    display: inline
+    display: inline;
 }
 
 .top {
     font-size: 16px;
+    text-align: center
 }
 
 .third h2{
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
     display: inline
+}
+
+.third {
+    font-size: 16px;
+    text-align: center
 }

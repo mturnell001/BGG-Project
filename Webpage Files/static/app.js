@@ -107,16 +107,21 @@ function blurb(game) {
     const name = game['gameName'],
     year = game['yearPublished'],
     //this is a lot of shenanigans to not cut off in the middle of a word
-    info = game['description'].slice(0,350).split(' ')
-        .slice(0,game['description'].slice(0,350).split(' ').length-1)
-        .join(' ').split('.').join('.')+'...',
+    infolength = 344,
+    info = game['description'].slice(0,infolength).split(' ')
+        .slice(0,game['description'].slice(0,infolength).split(' ').length-1)
+        .join(' ').split('.')
+        // .slice(0,game['description'].slice(0,infolength).split('.').length-1)
+        // .join('.')
+        +'...',
     minct = game['minPlayers'],
     maxct = game['maxPlayers'],
     mintime = game['minTime'],
     maxtime = game['maxTime'],
-    ranking = game['ranking'],
+    ranking = game['ranking'] === 999999 ? 'Unranked' : game['ranking'],
     rating = game['user_rating'];
 
+    console.log(info.length);
     //add a row containing title and published year
     const topRow = d3.select('.blurb').append('div')
         .attr('class', 'row');
@@ -126,7 +131,7 @@ function blurb(game) {
                 .html(`<h2>Title:</h2> ${name}`);
     topRow.append('div')
             .attr('class', 'col-md-6 top')
-                .html(`<h2>Published in:</h2> ${year}`);
+                .html(`<h2>Published in:</h2> ${year}<br>&nbsp;`);
 
     //add the description
     d3.select('.blurb').append('div')
@@ -145,7 +150,10 @@ function blurb(game) {
 
     thirdRow.append('div')
             .attr('class', 'col-md-6 third')
-                .html(`<h2>Est. Time:</h2> ${mintime} - ${maxtime} min.`);
+                .html(function() {
+                    if (mintime === maxtime) {return `<h2>Est. Time:</h2> ${mintime} min.`}
+                    else { return `<h2>Est. Time:</h2> ${mintime} - ${maxtime} min.` }
+                });
 
     //add final row containing ranking and rating info
     const lastRow = d3.select('.blurb').append('div')
@@ -154,10 +162,10 @@ function blurb(game) {
     lastRow.append('div')
             .attr('class', 'col-md-6 last')
                 .append('svg')
-                    .attr('width', '100%')
-                    .attr('height', '100%')
+                    .attr('width', '80%')
+                    .attr('height', '80%')
                     .attr('viewBox', '0 0 100 100')
-                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#3f3a60"></circle>
+                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#8a4b94"></circle>
                                 <text x="50%" y="35%" font-family="sans-serif" font-size="14px" text-anchor="middle" fill="black">BGG
                                 Ranking</text>
                                 <text x="50%" y="57%" font-family="sans-serif" font-size="20px" text-anchor="middle" fill='white'>${ranking}</text>`);
@@ -166,10 +174,10 @@ function blurb(game) {
     lastRow.append('div')
             .attr('class', 'col-md-6 last')
                 .append('svg')
-                    .attr('width', '100%')
-                    .attr('height', '100%')
+                    .attr('width', '80%')
+                    .attr('height', '80%')
                     .attr('viewBox', '0 0 100 100')
-                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#3f3a60"></circle>
+                        .html(`<circle cx="50%" cy="50%" r="50%" fill="#8a4b94"></circle>
                                 <text x="50%" y="35%" font-family="sans-serif" font-size="14px" text-anchor="middle" fill="black">User Rating</text>`)
                             .append('text')
                                 .attr('x', '50%')
@@ -177,11 +185,11 @@ function blurb(game) {
                                 .attr('font-size', '20px')
                                 .attr('text-anchor', 'middle')
                                 .attr('fill', function () {
-                                    if (rating > 8) { return 'green' }
+                                    if (rating > 8) { return 'darkgreen' }
                                     else if (rating > 6){ return 'yellow'}
                                     else { return 'red' };
                                 })
-                                .text(rating);
+                                .text(rating.toFixed(2));
                                 
 
 }
