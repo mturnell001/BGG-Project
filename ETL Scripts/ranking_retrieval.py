@@ -7,10 +7,9 @@ import math
 local_db_url = 'mongodb://localhost:27017'
 local_client = MongoClient(local_db_url)
 
-remote_db_url = f'mongodb+srv://mongoAdmin:Is9WzljUe0N8OjPi@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
+remote_db_url = f'mongodb+srv://mongoAdmin:{DB_PASS}@cluster0-qg8p8.mongodb.net/test?retryWrites=true&w=majority'
 remote_client = MongoClient(remote_db_url)
 
-# change once atlas comes back up
 bgg_db = remote_client.boardgames
 
 id_nums = []
